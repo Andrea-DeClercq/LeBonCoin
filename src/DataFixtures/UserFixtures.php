@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -20,15 +22,27 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     
     public function load(ObjectManager $manager): void
     {
-        $username = ['Jean', 'Francois', 'Lucas', 'Alex', 'Louis', 'Jerome'];
+        $faker = \Faker\Factory::create('fr_FR');
+        // $username = ['Jean', 'Francois', 'Lucas', 'Alex', 'Louis', 'Jerome'];
 
         for ($u = 0; $u < 6; $u++){
             $user = new User();
-            $user->setUsername($username[$u]);
+            $username = $faker->firstName();
+
+            $user->setUsername($username);
             
             $password = $this->hasher->hashPassword($user, 'pass_1234');
 
             $user->setPassword($password);
+
+            $createdAt = $faker->dateTimeBetween('-6 months');
+
+            $user->setCreatedAt($createdAt);
+
+            $updateAtDays = (new DateTime())->diff($createdAt)->days;
+
+            $user->setUpdatedAt($faker->dateTimeBetween('-' . $updateAtDays . ' days'));
+
             $manager->persist($user);
             $this->addReference(User::class.'_'.$u, $user);
         }
