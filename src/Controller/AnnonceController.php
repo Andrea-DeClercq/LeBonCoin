@@ -15,9 +15,9 @@ class AnnonceController extends AbstractController
 {
     #[Route('/', name: 'app_annonce')]
     public function index(EntityManagerInterface $em): Response
-    {
+    {   
         $listAnnonces = $em->getRepository(Annonce::class)->findAll();
-        // dd($listAnnonces[0]->getCategorie()->getTitle());
+        // dd($listAnnonces);
         return $this->render('annonce/index.html.twig', [
             'listAnnonces' => $listAnnonces
         ]);
@@ -36,7 +36,8 @@ class AnnonceController extends AbstractController
         // dd($this->getUser());
         return $this->render('annonce/view_annonce.html.twig', [
             'title' => $annonce->getTitle(),
-            'description' => $annonce->getDescription()
+            'description' => $annonce->getDescription(),
+            'annonce' => $annonce
         ]);
     }
 
@@ -70,5 +71,32 @@ class AnnonceController extends AbstractController
         return $this->renderForm('annonce/form_annonce.html.twig', [
             'form' => $form
         ]);
+    }
+
+
+    /**
+     * Edit Annonce by Id
+     * 
+     * @Route("/edit/annonce/{id}", name="edit_annonce")
+     * @param integer $id
+     * @param EntityManagerInterface $em
+     * @return Annonce
+     */
+    public function editAnnonce(int $id, EntityManagerInterface $em)
+    {
+        return 'TODO';
+    }
+
+     /**
+     * Remove annonce  by Id
+     * 
+     * @Route("/remove/annonce/{id}", name="remove_annonce")
+     * @param integer $id
+     * @param EntityManagerInterface $em
+     * @return Annonce
+     */
+    public function deleteAnnonce(int $id, EntityManagerInterface $em)
+    {
+        return 'TODO';
     }
 }
