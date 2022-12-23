@@ -1,27 +1,37 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{path('app_home')}}">Le bon coin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                    <a class="nav-link active" href="#">Déposer une annonce</a>
-                    </li>   
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li class="nav-item">
-                    <a class="nav-link active" href="{{path('app_logout')}}">Déconnexion</a>
-                    </li>
-                    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
-                    <li class="nav-item">
-                    <a class="nav-link active" href="{{path('app_login')}}">Se connecter</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" href="{{path('app_register')}}">S'inscrire</a>
-                    </li>
-                    {% endif %}
-                </ul>
-                </div>
-            </div>
-        </nav>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{path('app_annonce')}}">Le bon coin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+            <li class="nav-item">
+                <a class="nav-link active" href=
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    "{{path('create_annonce')}}"
+                {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                    "{{path('app_login')}}"
+                {% endif %}
+                >
+                Déposer une annonce</a>
+            </li>  
+        </ul>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <span class="navbar-text">
+            Bonjour, {{ app.user.username }}
+        </span>
+        <span class="navbar-text">
+            <a class="nav-link active" href="{{path('app_logout')}}">Déconnexion</a>
+        </span>
+        {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+            <span class="navbar-text">
+                <a class="nav-link active" href="{{path('app_login')}}">Se connecter</a>
+            </span>
+            <span class="navbar-text">
+                <a class="nav-link active" href="{{path('app_register')}}">S'inscrire</a>
+            </span>
+            {% endif %}
+        </div> 
+    </div>
+</nav>

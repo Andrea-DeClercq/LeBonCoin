@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Bon Coin{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10" style="margin-top: 25px;">
+        <div class="card">
+            <h1 style="text-align: center">{{ title }}</h1>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE" style="width: 100%">
+                    </div>
+                    <div class="col-8">
+                        {{ description}}
+                    </div>
+                </div>
+                </br>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and annonce.AnnonceByUser.getId() == app.user.id %}
+                <div class="row">
+                    <div class="col-8"></div>
+                    <div class="col-4">
+                        <a href="#" class="btn btn-success">Modifier</a>
+                        <a href="#" class="btn btn-danger">Supprimer</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
+{% endblock %}

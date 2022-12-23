@@ -13,10 +13,11 @@ class CategoryFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        $categoryTitle = ['Jardin', 'Cuisine', 'Menager', 'Informatique', 'Autres'];
-        for ($c = 0; $c < 5; $c++) {
+        $faker = \Faker\Factory::create('fr_FR');
+        
+        for ($c = 0; $c < 10; $c++) {
             $category = new Categorie();
-            $category->setTitle($categoryTitle[$c]);
+            $category->setTitle($faker->word());
             $manager->persist($category);
             $this->addReference(Categorie::class. '_'. $c , $category);
         }

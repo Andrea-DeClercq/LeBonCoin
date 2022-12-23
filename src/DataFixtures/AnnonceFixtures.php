@@ -5,8 +5,8 @@ namespace App\DataFixtures;
 use App\Entity\Annonce;
 use App\Entity\Categorie;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -23,14 +23,24 @@ class AnnonceFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager,): void
     {
+        $faker = \Faker\Factory::create('fr_FR');
+
         for ($i = 0; $i < 12; $i++) {
             $annonce = new Annonce();
-            $annonce->setTitle('annonce '.$i);
-            $annonce->setDescription('description '.$i);
+            $annonce->setTitle($faker->word());
+            $annonce->setDescription($faker->sentences('3', true));
             $annonce->setPrice(mt_rand(10, 100));
-            $annonce->setCategorie($this->getReference(Categorie::class.'_'.mt_rand(0,4)));
-            $annonce->setAnnonceByUser($this->getReference(User::class.'_'.mt_rand(0,5)));
-            $annonce->setCreatedAt(new DateTimeImmutable());
+            $annonce->setCategorie($this->getReference(Categorie::class.'_'.mt_rand(0,9)));
+            $annonce->setAnnonceByUser($this->getReference(User::class.'_'.mt_rand(0,9)));
+
+            $createdAt = $faker->dateTimeBetween('-6 months');
+            
+            $annonce->setCreatedAt($createdAt);
+
+            $updateAtDays = (new DateTime())->diff($createdAt)->days;
+
+            $annonce->setUpdatedAt($faker->dateTimeBetween('-' . $updateAtDays . ' days'));
+
             $manager->persist($annonce);
         }
         // A compléter pour générer les catégories et les users
