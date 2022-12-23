@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le Bon Coin{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10" style="margin-top: 25px;">
+    <div class="row">
+    {% for annonce in listAnnonces %}
+    <div class="col-3" style="margin: 10px 0px 10px 0px;">
+      <div class="card" style="width: 18rem;">
+        <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE">
+        <div class="card-body">
+          <h5 class="card-title">{{ annonce.title }}</h5>
+          <p class="card-text">{{ annonce.description|u.truncate(20, '...')}}</p>
+          {% if annonce.getCategorie().getTitle() is defined and annonce.getCategorie().getTitle() is not empty %}
+            <p class="card-text">Catégorie : {{ annonce.getCategorie().getTitle() }}</p>
+            {% else %}
+            <p class="card-text">Catégorie : -</p>
+          {% endif %}
+          
+          <a href="{{path('view_annonce', {id: annonce.id}) }}" class="btn btn-primary">Voir les détails</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
+{% endblock %}
