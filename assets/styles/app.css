@@ -11,3 +11,7 @@ body {
     text-align: center;
     font-size: 12px;
 }
+
+.form_annonce {
+    border-top: solid 1px black;
+}

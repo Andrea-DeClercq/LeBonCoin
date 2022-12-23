@@ -43,7 +43,6 @@ class AnnonceType extends AbstractType
                     ])
                     ],
                 'attr' => ['placeholder' => 'Titre de l\'annonce'],
-                'label' => 'Titre',
             ])
             ->add('description', TextareaType::class, [
                 'constraints' => [
@@ -79,7 +78,8 @@ class AnnonceType extends AbstractType
             //         ]
             // ])
             ->add('submit', SubmitType::class,[
-                'attr' => ['class' => 'btn btn-success ']
+                'attr' => ['class' => 'btn btn-success '],
+                'label' => 'Poster'
             ])
         ;
     }
