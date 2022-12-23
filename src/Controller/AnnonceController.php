@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +33,7 @@ class AnnonceController extends AbstractController
      */
     public function viewAnnonce(int $id, EntityManagerInterface $em){
         $annonce = $em->getRepository(Annonce::class)->find($id);
-        // dd($annonce);
+        // dd($this->getUser());
         return $this->render('annonce/view_annonce.html.twig', [
             'title' => $annonce->getTitle(),
             'description' => $annonce->getDescription()
@@ -40,9 +41,9 @@ class AnnonceController extends AbstractController
     }
 
     /**
-     * Crate new annonce
+     * Create new annonce
      *
-     * @Route()
+     * @Route("/create/annonce", name="create_annonce")
      * @param Request $request
      * @param EntityManagerInterface $em
      * 
@@ -57,9 +58,12 @@ class AnnonceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
+            $data = $annonce->setCreatedAt(new DateTime());
+            $data = $annonce->setAnnonceByUser($this->getUser());
+            // dd($data);
             $em->persist($data);
             $em->flush();
-            // dd($data);
+            
             return $this->redirectToRoute('app_annonce');
         }
 

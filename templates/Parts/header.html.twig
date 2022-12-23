@@ -7,7 +7,7 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                    <a class="nav-link active" href="#">Déposer une annonce</a>
+                    <a class="nav-link active" href="{{path('create_annonce')}}">Déposer une annonce</a>
                     </li>   
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">

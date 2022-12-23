@@ -23,15 +23,14 @@ class UserFixtures extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager): void
     {
         $faker = \Faker\Factory::create('fr_FR');
-        // $username = ['Jean', 'Francois', 'Lucas', 'Alex', 'Louis', 'Jerome'];
 
-        for ($u = 0; $u < 6; $u++){
+        for ($u = 0; $u < 10; $u++){
             $user = new User();
             $username = $faker->firstName();
 
             $user->setUsername($username);
             
-            $password = $this->hasher->hashPassword($user, 'pass_1234');
+            $password = $this->hasher->hashPassword($user, $username);
 
             $user->setPassword($password);
 

@@ -1,3 +1,13 @@
 body {
     background-color: lightgray;
 }
+
+.date {
+    margin-top: 3px;
+    margin-bottom: 0px;
+    padding: auto;
+    border-top: solid 1px gray;
+    background-color: rgba(168, 178, 188, 0.818);
+    text-align: center;
+    font-size: 12px;
+}

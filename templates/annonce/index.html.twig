@@ -20,9 +20,15 @@
             {% else %}
             <p class="card-text">Catégorie : -</p>
           {% endif %}
-          
+
           <a href="{{path('view_annonce', {id: annonce.id}) }}" class="btn btn-primary">Voir les détails</a>
+          
         </div>
+        {% if annonce.updatedAt is defined and annonce.updatedAt is not empty %}
+          <div class="card-footer"> Modifié le {{ annonce.updatedAt|date("d/m/Y") }} à {{ annonce.updatedAt|date("H:m")}} </div>
+          {% else %}
+          <div class="card-footer">  Crée le {{ annonce.createdAt|date("d/m/Y") }} à {{ annonce.createdAt|date("H:m")}} </div>
+        {% endif %} 
       </div>
     </div>
     {% endfor %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Nouvelle annonce{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+ <h1> Publication d'une nouvelle annonce</h1>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10" style="margin-top: 25px;">
+{{ form_start(form) }}
+    {{form_widget(form.title)}}
+    {{form_widget(form.description)}}
+    {{form_widget(form.price)}}
+    {{form_widget(form.categorie)}}
+    {{form_widget(form.submit)}}
+{{ form_end(form) }}
+    </div>
+    <div class="col-1"></div>
+  </div>
+{% endblock %}
