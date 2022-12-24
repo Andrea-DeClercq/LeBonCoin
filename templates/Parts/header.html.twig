@@ -15,12 +15,23 @@
                 {% endif %}
                 >
                 Déposer une annonce</a>
-            </li>  
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href=
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        "{{path('view_my_annonce')}}"
+                    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                        "{{path('app_login')}}"
+                    {% endif %}
+                >
+                Mes annonces </a>
+            </li> 
         </ul>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <span class="navbar-text">
-            Bonjour, {{ app.user.username }}
+            Bonjour, {{ app.user.username }} 
         </span>
+        <span> - </span>
         <span class="navbar-text">
             <a class="nav-link active" href="{{path('app_logout')}}">Déconnexion</a>
         </span>

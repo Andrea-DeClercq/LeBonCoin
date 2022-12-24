@@ -55,6 +55,16 @@ class AnnonceRepository extends ServiceEntityRepository
         
         return $queryBuilder;
     }
+
+    public function myAnnoncesOrderedByDateQueryBuilder(int $id): QueryBuilder
+    {
+        $queryBuilder =  $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->andWhere('a.AnnonceByUser = :id')
+            ->setParameter('id', $id);
+        
+        return $queryBuilder;
+    }
 //    public function findOneBySomeField($value): ?Annonce
 //    {
 //        return $this->createQueryBuilder('a')

@@ -22,8 +22,28 @@ class AnnonceController extends AbstractController
         // return $this->render('annonce/index.html.twig', [
         //     'listAnnonces' => $listAnnonces
         // ]);
-
+        
         $querybuilder = $em->getRepository(Annonce::class)->createOrderedByDateQueryBuilder();
+        $adapter = new QueryAdapter($querybuilder);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            $request->query->get('page', 1),
+            8
+        );
+        return $this->render('annonce/index.html.twig', [
+            'pager' => $pagerfanta
+        ]);
+    }
+
+    #[Route('/mes-annonces', name: 'view_my_annonce')]
+    public function viewMyAnnonces(EntityManagerInterface $em, Request $request): Response
+    {   
+        // $listAnnonces = $em->getRepository(Annonce::class)->getAllAnnoncesByDate();
+        // return $this->render('annonce/index.html.twig', [
+        //     'listAnnonces' => $listAnnonces
+        // ]);
+
+        $querybuilder = $em->getRepository(Annonce::class)->myAnnoncesOrderedByDateQueryBuilder($this->getUser()->getId());
         $adapter = new QueryAdapter($querybuilder);
         $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
             $adapter,
