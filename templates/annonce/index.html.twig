@@ -8,7 +8,7 @@
     <div class="col-1"></div>
     <div class="col-10" style="margin-top: 25px;">
     <div class="row">
-    {% for annonce in listAnnonces %}
+    {% for annonce in pager %}
     <div class="col-3" style="margin: 10px 0px 10px 0px;">
       <div class="card" style="width: 18rem;">
         <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE">
@@ -35,6 +35,13 @@
     </div>
     </div>
     <div class="col-1"></div>
+      <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2 text-center">
+          {{ pagerfanta(pager) }}
+        </div>
+        <div class="col-5"></div>
+      </div>
   </div>
 </div>
 {% endblock %}

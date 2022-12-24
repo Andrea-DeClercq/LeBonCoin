@@ -8,26 +8,33 @@
     <div class="col-1"></div>
     <div class="col-10" style="margin-top: 25px;">
         <div class="card">
-            <h1 style="text-align: center">{{ title }}</h1>
+            <h1 style="text-align: center">{{ annonce.title }}</h1>
             <div class="card-body">
                 <div class="row">
                     <div class="col-4">
                         <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE" style="width: 100%">
                     </div>
                     <div class="col-8">
-                        {{ description}}
+                        <p>{{ annonce.description}}</p>
+                        </br>
+                        <p>Publié par {{ annonce.AnnonceByUser.getUsername() }}</p>
                     </div>
                 </div>
                 </br>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') and annonce.AnnonceByUser.getId() == app.user.id %}
                 <div class="row">
-                    <div class="col-8"></div>
-                    <div class="col-4">
-                        <a href="#" class="btn btn-success">Modifier</a>
-                        <a href="#" class="btn btn-danger">Supprimer</a>
+                    <div class="col-8">
+                        <p>Publier le {{ annonce.createdAt|date('d/m/Y H:m')}} 
+                            {% if annonce.updatedAt is defined and annonce.updatedAt is not empty %}
+                            - Dernière modification le {{ annonce.updatedAt|date('d/m/Y H:m') }}
+                            {% endif %}</p>
                     </div>
-                </div>
-                {% endif %}
+                    <div class="col-4">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and annonce.AnnonceByUser.getId() == app.user.id %}
+                        <a href="{{ path('edit_annonce', { id: annonce.id }) }}" class="btn btn-success">Modifier</a>
+                        <a href="{{ path('delete_annonce', { id: annonce.id }) }}"  class="btn btn-danger">Supprimer</a>
+                    {% endif %}
+                    </div>
+                </div>   
             </div>
         </div>
     </div>
