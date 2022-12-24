@@ -10,16 +10,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 class AnnonceController extends AbstractController
 {
     #[Route('/', name: 'app_annonce')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, Request $request): Response
     {   
-        $listAnnonces = $em->getRepository(Annonce::class)->findAll();
-        // dd($listAnnonces);
+        // $listAnnonces = $em->getRepository(Annonce::class)->getAllAnnoncesByDate();
+        // return $this->render('annonce/index.html.twig', [
+        //     'listAnnonces' => $listAnnonces
+        // ]);
+
+        $querybuilder = $em->getRepository(Annonce::class)->createOrderedByDateQueryBuilder();
+        $adapter = new QueryAdapter($querybuilder);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            $request->query->get('page', 1),
+            8
+        );
         return $this->render('annonce/index.html.twig', [
-            'listAnnonces' => $listAnnonces
+            'pager' => $pagerfanta
         ]);
     }
 
@@ -33,10 +45,11 @@ class AnnonceController extends AbstractController
      */
     public function viewAnnonce(int $id, EntityManagerInterface $em){
         $annonce = $em->getRepository(Annonce::class)->find($id);
-        // dd($this->getUser());
+
+        if (!$annonce){
+            throw $this->createNotFoundException('No annonce found'); 
+        }
         return $this->render('annonce/view_annonce.html.twig', [
-            'title' => $annonce->getTitle(),
-            'description' => $annonce->getDescription(),
             'annonce' => $annonce
         ]);
     }
@@ -61,7 +74,6 @@ class AnnonceController extends AbstractController
             $data = $form->getData();
             $data = $annonce->setCreatedAt(new DateTime());
             $data = $annonce->setAnnonceByUser($this->getUser());
-            // dd($data);
             $em->persist($data);
             $em->flush();
             
@@ -69,7 +81,8 @@ class AnnonceController extends AbstractController
         }
 
         return $this->renderForm('annonce/form_annonce.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'createdAt' => null
         ]);
     }
 
@@ -82,21 +95,48 @@ class AnnonceController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Annonce
      */
-    public function editAnnonce(int $id, EntityManagerInterface $em)
+    public function editAnnonce(int $id, EntityManagerInterface $em, Request $request)
     {
-        return 'TODO';
+        $annonce = $em->getRepository(Annonce::class)->find($id);
+
+        $form = $this->createForm(AnnonceType::class, $annonce);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            $data = $annonce->setUpdatedAt(new DateTime());
+            $em->persist($data);
+            $em->flush();
+            
+            return $this->redirectToRoute('app_annonce');
+        }
+
+        return $this->renderForm('annonce/form_annonce.html.twig', [
+            'form' => $form,
+            'createdAt' => $annonce->getCreatedAt()
+        ]);
     }
 
      /**
      * Remove annonce  by Id
      * 
-     * @Route("/remove/annonce/{id}", name="remove_annonce")
+     * @Route("/delete/annonce/{id}", name="delete_annonce")
      * @param integer $id
      * @param EntityManagerInterface $em
      * @return Annonce
      */
     public function deleteAnnonce(int $id, EntityManagerInterface $em)
     {
-        return 'TODO';
+        $annonce = $em->getRepository(Annonce::class)->find($id);
+
+        if(!$annonce || $this->getUser() != $annonce->getAnnonceByUser()) 
+        {
+           throw $this->createNotFoundException('No annonce found'); 
+        }
+
+        $em->remove($annonce);
+        $em->flush();    
+        return $this->redirectToRoute('app_annonce');
     }
 }
