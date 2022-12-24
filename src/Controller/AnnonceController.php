@@ -45,6 +45,10 @@ class AnnonceController extends AbstractController
      */
     public function viewAnnonce(int $id, EntityManagerInterface $em){
         $annonce = $em->getRepository(Annonce::class)->find($id);
+
+        if (!$annonce){
+            throw $this->createNotFoundException('No annonce found'); 
+        }
         return $this->render('annonce/view_annonce.html.twig', [
             'annonce' => $annonce
         ]);
@@ -77,7 +81,8 @@ class AnnonceController extends AbstractController
         }
 
         return $this->renderForm('annonce/form_annonce.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'createdAt' => null
         ]);
     }
 
@@ -108,7 +113,8 @@ class AnnonceController extends AbstractController
         }
 
         return $this->renderForm('annonce/form_annonce.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'createdAt' => $annonce->getCreatedAt()
         ]);
     }
 

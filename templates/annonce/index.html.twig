@@ -4,44 +4,46 @@
 
 {% block body %}
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="col-10" style="margin-top: 25px;">
+  <turbo-frame id="annonce-browse-list">
     <div class="row">
-    {% for annonce in pager %}
-    <div class="col-3" style="margin: 10px 0px 10px 0px;">
-      <div class="card" style="width: 18rem;">
-        <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE">
-        <div class="card-body">
-          <h5 class="card-title">{{ annonce.title }}</h5>
-          <p class="card-text">{{ annonce.description|u.truncate(20, '...')}}</p>
-          {% if annonce.getCategorie().getTitle() is defined and annonce.getCategorie().getTitle() is not empty %}
-            <p class="card-text">Catégorie : {{ annonce.getCategorie().getTitle() }}</p>
-            {% else %}
-            <p class="card-text">Catégorie : -</p>
-          {% endif %}
-
-          <a href="{{path('view_annonce', {id: annonce.id}) }}" class="btn btn-primary">Voir les détails</a>
-          
-        </div>
-        {% if annonce.updatedAt is defined and annonce.updatedAt is not empty %}
-          <div class="card-footer"> Modifié le {{ annonce.updatedAt|date("d/m/Y") }} à {{ annonce.updatedAt|date("H:m")}} </div>
-          {% else %}
-          <div class="card-footer">  Crée le {{ annonce.createdAt|date("d/m/Y") }} à {{ annonce.createdAt|date("H:m")}} </div>
-        {% endif %} 
-      </div>
-    </div>
-    {% endfor %}
-    </div>
-    </div>
-    <div class="col-1"></div>
+      <div class="col-1"></div>
+      <div class="col-10" style="margin-top: 25px;">
       <div class="row">
-        <div class="col-5"></div>
-        <div class="col-2 text-center">
-          {{ pagerfanta(pager) }}
+      {% for annonce in pager %}
+      <div class="col-3" style="margin: 10px 0px 10px 0px;">
+        <div class="card" style="width: 18rem;">
+          <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE">
+          <div class="card-body">
+            <h5 class="card-title">{{ annonce.title }}</h5>
+            <p class="card-text">{{ annonce.description|u.truncate(20, '...')}}</p>
+            {% if annonce.getCategorie().getTitle() is defined and annonce.getCategorie().getTitle() is not empty %}
+              <p class="card-text">Catégorie : {{ annonce.getCategorie().getTitle() }}</p>
+              {% else %}
+              <p class="card-text">Catégorie : -</p>
+            {% endif %}
+
+            <a href="{{path('view_annonce', {id: annonce.id}) }}" class="btn btn-primary">Voir les détails</a>
+            
+          </div>
+          {% if annonce.updatedAt is defined and annonce.updatedAt is not empty %}
+            <div class="card-footer"> Modifié le {{ annonce.updatedAt|date("d/m/Y") }} à {{ annonce.updatedAt|date("H:m")}} </div>
+            {% else %}
+            <div class="card-footer">  Crée le {{ annonce.createdAt|date("d/m/Y") }} à {{ annonce.createdAt|date("H:m")}} </div>
+          {% endif %} 
         </div>
-        <div class="col-5"></div>
       </div>
-  </div>
+      {% endfor %}
+      </div> 
+      </div>
+      <div class="col-1"></div>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-2 text-center">
+            {{ pagerfanta(pager) }}
+          </div>
+          <div class="col-5"></div>
+        </div>
+    </div>
+  </turbo-frame>
 </div>
 {% endblock %}

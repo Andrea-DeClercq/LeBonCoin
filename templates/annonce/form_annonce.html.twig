@@ -4,38 +4,44 @@
 {% block title %}Nouvelle annonce{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-<div class="container-fluid">
- <h1> Publication d'une nouvelle annonce</h1>
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="col-10" style="margin-top: 25px;">
-      <div class="row">
-          <div class="col-6">
-            <h4> Titre de l'annonce</h4>
-            {{form_widget(form.title)}}
-            </br>
-            <h4> Description de l'annonce</h4>
-            {{form_widget(form.description)}}
-            </br>
-          </div>
-          <div class="col-6">
-            <h4>Prix</h4>
-            {{form_widget(form.price)}}
-            </br>
-            <h4>Catégorie</h4>
-            {{form_widget(form.categorie)}}
-            </br>
-          </div>
-          <div class="col-4"></div>
-          <div class="col-4" style="text-align: center">
-            {{form_widget(form.submit)}}
-          </div>
-          <div class="col-4"></div>
+<turbo-frame id="form-annonce">
+  {{ form_start(form) }}
+  <div class="container-fluid">
+    {% if createdAt is null %}
+      <h1> Publication d'une nouvelle annonce</h1>
+    {% else %}
+      <h1> Modification de l'annonce</h1>
+    {% endif %}
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10" style="margin-top: 25px;">
+        <div class="row">
+            <div class="col-6">
+              <h4> Titre de l'annonce</h4>
+              {{form_widget(form.title)}}
+              </br>
+              <h4> Description de l'annonce</h4>
+              {{form_widget(form.description)}}
+              </br>
+            </div>
+            <div class="col-6">
+              <h4>Prix</h4>
+              {{form_widget(form.price)}}
+              </br>
+              <h4>Catégorie</h4>
+              {{form_widget(form.categorie)}}
+              </br>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4" style="text-align: center">
+              {{form_widget(form.submit)}}
+            </div>
+            <div class="col-4"></div>
+        </div>
       </div>
+      <div class="col-1"></div>
     </div>
-    <div class="col-1"></div>
   </div>
-</div>
-{{ form_end(form) }}
+  {{ form_end(form) }}
+</turbo-frame>
 {% endblock %}
