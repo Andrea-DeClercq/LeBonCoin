@@ -17,9 +17,11 @@ composer install
 Connecter la base de donnée via le fichier .env ou créer un fichier .env.local
 Prendre la configuration associé a votre BDD parmis 
 
+```
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8&charset=utf8mb4"
 # DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=14&charset=utf8"
+```
 
 Run la commande `php bin/console doctrine:create:database`
 /!\ Vérifier les fichiers migrations le dernier à jour est le fichier 'Version20221224152258.php' exécutez celui-ci sinon,
