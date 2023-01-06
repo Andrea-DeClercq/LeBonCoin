@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class AnnonceController extends AbstractController
         // return $this->render('annonce/index.html.twig', [
         //     'listAnnonces' => $listAnnonces
         // ]);
-        
+
         $querybuilder = $em->getRepository(Annonce::class)->createOrderedByDateQueryBuilder();
         $adapter = new QueryAdapter($querybuilder);
         $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
@@ -117,7 +118,12 @@ class AnnonceController extends AbstractController
      */
     public function editAnnonce(int $id, EntityManagerInterface $em, Request $request)
     {
+        
         $annonce = $em->getRepository(Annonce::class)->find($id);
+        
+        if($annonce->getAnnonceByUser()->getId() != $this->getUser()->getId()){
+            throw new Exception('Vous n`avez pas accès a cette annonce');
+        }
 
         $form = $this->createForm(AnnonceType::class, $annonce);
 
