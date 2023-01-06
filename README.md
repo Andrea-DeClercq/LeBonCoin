@@ -10,12 +10,12 @@ Suivre les marches suivantes :
 composer install
 ```
 
-  Commande alternatives en fonction de comment est installé composer `php composer.phar install`.
+Commande alternative en fonction de comment est installée composer `php composer.phar install`.
 
-## Connecter la base de donnée ##
+## Connecter la base de donnéees ##
 
-Connecter la base de donnée via le fichier .env ou créer un fichier .env.local
-Prendre la configuration associé a votre BDD parmis 
+Connecter la base de données via le fichier .env ou créer un fichier .env.local
+Prendre la configuration associée a votre BDD parmi
 
 ```
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
@@ -52,13 +52,13 @@ Alternatif
 symfony server:start -d (-d optionnel mais permet de récupérer la main sur le terminal)
 ```
 
-## OPTIONEL WEBPACK ENCORE ##
+## OPTIONNEL WEBPACK ENCORE ##
 
-Je me sers de ce TP afin d'expérimenter plus d'outils de symfony d'ou la présence de WebPack Encore, ou bien Symfony TURBO.
+Je me sers de ce TP afin d'expérimenter plus d'outils de symfony d'où la présence de WebPack Encore, ou bien Symfony TURBO.
 
-/!\ Fortement conseiller d'installer et de run webpack pour une utilisation optimal
+/!\ Fortement conseiller d'installer et de run webpack pour une utilisation optimale
 
-Assurez-vous d'avoir du [yarn](https://yarnpkg.com/lang/en/)
+Assurez-vous d'avoir [yarn](https://yarnpkg.com/lang/en/)
 ou `npm` installé (`npm` est fourni avec Node), puis exécutez :
 
 ```
@@ -70,14 +70,14 @@ npm install
 npm run watch
 ```
 
-## Remplir sa base de donnée ## 
+## Remplir sa base de données ## 
 
-Des fixtures avec Faker accompagne le TP, si toutes les dépendances ont été installé et la BDD connecté et configurer il suffit d'éxécuter la commande : 
+Des fixtures avec Faker accompagnent le TP, si toutes les dépendances ont été installé et la BDD connecté et configuré il suffit d'exécuter la commande : 
 
 ```
 php bin/console doctrine:fixtures:load
 ```
 
-- Pour la connection sur l'application avec un utilisateur généré avec les fixtures, les identifiants sont de type :
+- Pour la connexion sur l'application avec un utilisateur généré avec les fixtures, les identifiants sont de type :
 Username : exempleNomFaker
 Password : exempleNomFaker
