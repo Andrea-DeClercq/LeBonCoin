@@ -1,5 +1,8 @@
+@import '~bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
 body {
-    background-color: lightgray;
+    background-color: white;
 }
 
 .date {
@@ -14,4 +17,30 @@ body {
 
 .form_annonce {
     border-top: solid 1px black;
+}
+
+.custom-navbar .fa {font-size:25px}
+
+@media (max-width:767px) { 
+    .custom-navbar .navbar-right {
+        float: right;
+        padding-right: 15px;
+    }
+    .custom-navbar .nav.navbar-nav.navbar-right li {
+        float: right;
+    }
+    .custom-navbar .nav.navbar-nav.navbar-right li > a {
+        padding:8px 5px;
+    }
+    .custom-navbar .navbar-toggle {
+        float: left
+    }
+    .custom-navbar .navbar-header {
+        float: left;
+        width: auto!important;
+    }
+    .custom-navbar .navbar-collapse {
+        clear: both;
+        float: none;
+    }
 }

@@ -14,7 +14,8 @@
         <div class="card" style="width: 18rem;">
           <img src="{{ asset('build/images/sale.png') }}" class="card-img-top" alt="SALE IMAGE">
           <div class="card-body">
-            <h5 class="card-title">{{ annonce.title }}</h5>
+            <h3 class="card-title">{{ annonce.title }}</h3>
+            <h5 class="card-title"> Prix : {{ annonce.price }} €</h5>
             <p class="card-text">{{ annonce.description|u.truncate(20, '...')}}</p>
             {% if annonce.getCategorie().getTitle() is defined and annonce.getCategorie().getTitle() is not empty %}
               <p class="card-text">Catégorie : {{ annonce.getCategorie().getTitle() }}</p>
